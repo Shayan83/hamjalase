@@ -9,7 +9,7 @@ dist
 .DS_Store
 npm-debug.log*
 *.tsbuildinfo
-.openai/hosting.json
+.openai
 *.local.md
 *.local.json
 docs

@@ -57,7 +57,7 @@ next-env.d.ts
 
 # Publish the template, never machine-specific configuration.
 !.env.example
-/.openai/hosting.json
+/.openai/
 *.tsbuildinfo
 *.local.md
 *.local.json

@@ -1,31 +1,60 @@
-# هم‌جلسه | Hamjalase
+<div align="center">
 
-دستیار فارسی مدیریت جلسه با Nextcloud، رابط راست‌به‌چپ، تاریخ شمسی و فونت Vazirmatn. سرویس مدل با آدرس API، نام مدل و کلید قابل انتخاب است.
+# Hamjalase · هم‌جلسه
 
-## معرفی تصویری
+**A Persian-first meeting assistant for Nextcloud**
 
-[نسخهٔ نمایشی با داده‌های نمونه](http://localhost:5173/demo) بدون اتصال به سرویس‌ها، گردش کار رابط را نشان می‌دهد.
+Plan meetings, find a shared time, create Talk links, and track decisions in one workspace.
 
-![نمای کلی](docs/images/overview.png)
-![گردش کار متحرک](docs/demo.gif)
+[![Checks](https://github.com/Shayan83/hamjalase/actions/workflows/checks.yml/badge.svg)](https://github.com/Shayan83/hamjalase/actions/workflows/checks.yml)
+![Node.js](https://img.shields.io/badge/Node.js-24%2B-417e38)
+![Nextcloud](https://img.shields.io/badge/Nextcloud-Calendar%20%2B%20Talk-0082c9)
+![Interface](https://img.shields.io/badge/UI-Persian%20%2F%20RTL-687c5a)
 
-## امکانات
+[Features](#features) · [Quick start](#quick-start) · [Configuration](#configuration) · [Report an issue](https://github.com/Shayan83/hamjalase/issues)
 
-- گفت‌وگو برای آماده‌سازی، فهرست و جست‌وجوی جلسه، بررسی تقویم، پیشنهاد لغو و تغییر زمان و خواندن صورت‌جلسه
-- ساخت لینک Talk و ثبت رویداد در تقویم سازمان‌دهنده؛ شناسهٔ پایدار برای جلوگیری از ساخت تکراری
-- پیشنهاد زمان مشترک پیش از ساخت، در هفت روز از تاریخ انتخاب‌شده و ساعت ۹ تا ۱۸ تهران
-- انتخاب کاربران واقعی؛ افزودن و حذف عضویت اتاق Talk هنگام ویرایش
-- ویرایش عنوان، تاریخ، ساعت، مدت، دستور جلسه و شرکت‌کننده‌ها
-- جست‌وجو و فیلتر جلسه‌های آینده، گذشته و لغوشده
-- دریافت فایل `.ics` برای افزودن جلسه به تقویم‌های دیگر
-- ثبت تصمیم‌ها، کارها، مسئول، موعد شمسی و وضعیت انجام
-- تست اتصال مدل و Nextcloud با توضیح خطای آدرس، مدل، کلید یا دسترسی
-- ورود با حساب Nextcloud و جداسازی اطلاعات حساب‌ها
-- ذخیرهٔ حداکثر ۲۰ گفت‌وگو در مرورگر؛ پنج مورد آخر در منو قابل بازیابی است
+</div>
 
-## اجرای محلی
+![Hamjalase workspace with sample data](docs/images/overview.png)
 
-نیازمندی‌ها: Node.js نسخهٔ 24 یا بالاتر، npm و یک Nextcloud با Calendar و Talk فعال و تقویمی با شناسهٔ `personal`.
+## Overview
+
+Hamjalase is a standalone web app that connects to your Nextcloud instance. Describe a meeting in chat, select participants from your user directory, and review the draft. The assistant can check calendar availability and suggest a shared time before creating a Talk room and a calendar event.
+
+Connect your preferred **Chat Completions-compatible API** using its base URL, model name, and API key. The interface is designed for Persian, with right-to-left layouts, a Jalali date picker, and the Vazirmatn font.
+
+## Features
+
+| Area | Capabilities |
+| --- | --- |
+| Conversational planning | Prepare meeting drafts, search meetings, and propose rescheduling or cancellation for confirmation. |
+| Availability | Select Nextcloud users, check conflicts, and suggest shared times. |
+| Meeting management | Create Talk links and calendar events; edit meeting details and room membership. |
+| Follow-up | Save minutes, decisions, and action items with owners, due dates, and completion status. |
+| Accounts | Sign in with a Nextcloud account and keep account data separate. |
+| Calendar export | Download `.ics` files for use in other calendar apps. |
+| Connection settings | Configure and test the AI provider and Nextcloud connections. |
+
+<details>
+<summary>Workflow preview and screenshots</summary>
+
+All previews use sample data.
+
+![Workflow preview](docs/demo.gif)
+![Meeting management](docs/images/meetings.png)
+![Meeting minutes and action items](docs/images/minutes.png)
+
+</details>
+
+## Quick start
+
+### Requirements
+
+- Node.js **24 or later** and npm.
+- An existing Nextcloud instance with **Calendar** and **Talk** enabled.
+- A Chat Completions-compatible AI service for conversational features.
+
+### Installation
 
 ```sh
 git clone https://github.com/Shayan83/hamjalase.git
@@ -34,75 +63,61 @@ npm ci
 cp .env.example .env.local
 ```
 
-فایل `.env.local` را با مشخصات سرویس مدل و Nextcloud پر کنید، سپس:
+Edit `.env.local` with your Nextcloud and AI provider settings, then start the app:
 
 ```sh
 npm run dev
 ```
 
-رابط در [localhost:5173](http://localhost:5173) باز می‌شود. نصب و build به ابزار محلی Codex وابسته نیستند.
+Open the address printed in your terminal. The `/demo` route provides a sample-data preview without connecting to Nextcloud or an AI provider. A hosted live demo is not currently available.
 
-## تنظیم مدل
+## Configuration
 
-| متغیر | کاربرد |
+Use [`.env.example`](.env.example) as the configuration template.
+
+| Variable | Purpose |
 | --- | --- |
-| `AI_BASE_URL` | آدرس پایه مانند `https://api.example.com/v1` |
-| `AI_API_KEY` | کلید سرویس؛ برای مدل بدون احراز هویت می‌تواند خالی باشد |
-| `AI_MODEL` | نام دقیق مدل موجود در سرویس انتخابی |
+| `NEXTCLOUD_URL` | Nextcloud URL reachable by the application server. |
+| `NEXTCLOUD_BROWSER_URL` | Nextcloud URL participants can use to open Talk links. |
+| `NEXTCLOUD_CALENDAR` | Calendar identifier; defaults to `personal`. |
+| `AI_BASE_URL` | Base URL of a Chat Completions-compatible API. |
+| `AI_MODEL` | Model identifier supported by your provider. |
+| `AI_API_KEY` | Your AI provider API key. |
+| `SESSION_SECRET` | Random secret used to encrypt account sessions. |
+| `APP_AUTH_REQUIRED` | Set to `true` for an internet-facing deployment. |
 
-API باید قالب **Chat Completions** را پشتیبانی کند: درخواست `POST` شامل `model`، `messages` و `stream: false` و پاسخ متنی در `choices[0].message.content`. آدرس پایه یا آدرس کامل `/chat/completions` پذیرفته می‌شود. قالب‌های بومی دیگر به مبدل نیاز دارند.
-
-آدرس عمومی باید HTTPS باشد. HTTP برای `localhost`، `127.0.0.1`، `[::1]` و `host.docker.internal` پشتیبانی می‌شود. در Docker برای مدل روی میزبان از `host.docker.internal` استفاده کنید.
-
-تنظیمات نشست در رابط قابل جایگزینی‌اند و با رفرش پاک می‌شوند. کلید سرور به آدرس جایگزین فرستاده نمی‌شود. متن گفت‌وگو و مشخصات جلسه برای تولید پاسخ به سرویس انتخابی ارسال می‌شوند. مدیر استقرار باید سهمیه و هزینهٔ سرویس پیش‌فرض را متناسب با کاربران تنظیم کند.
-
-## اتصال Nextcloud
-
-| متغیر | کاربرد |
-| --- | --- |
-| `NEXTCLOUD_URL` | آدرس Nextcloud از دید سرور دستیار |
-| `NEXTCLOUD_BROWSER_URL` | آدرس قابل دسترسی کاربران برای لینک Talk؛ پیش‌فرض همان آدرس بالا |
-| `NEXTCLOUD_USERNAME` | حساب پیش‌فرض فقط برای میان‌بُر توسعهٔ محلی |
-| `NEXTCLOUD_PASSWORD` | رمز برنامهٔ حساب پیش‌فرض توسعهٔ محلی |
-| `NEXTCLOUD_CALENDAR` | شناسهٔ تقویم موجود؛ پیش‌فرض `personal` |
-
-هر حساب باید بتواند فایل و رویداد تقویم خود را بخواند و بنویسد و اتاق Talk بسازد. بررسی زمان مشترک به دسترسی FreeBusy و مشخصات تقویمی افراد وابسته است؛ حساب محدود ممکن است نتواند اطلاعات لازم دربارهٔ دیگران را بخواند. در این حالت وضعیت «نامشخص» است و ساخت جلسه متوقف می‌شود. هیچ زمان نامعلومی آزاد فرض نمی‌شود.
-
-## ورود کاربران و دسترسی اینترنتی
-
-1. `APP_AUTH_REQUIRED=true` را تنظیم کنید.
-2. یک `SESSION_SECRET` تصادفی با حداقل ۳۲ نویسه بسازید و در تنظیمات محرمانهٔ سرور قرار دهید:
+Generate a session secret and save it in `.env.local`:
 
 ```sh
 node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
 ```
 
-3. برنامه را پشت HTTPS اجرا کنید. مقصد Nextcloud روی سرور ثابت است.
-4. هر شخص با نام کاربری و رمز برنامهٔ حساب خودش وارد می‌شود. اطلاعات ورود با AES-GCM در کوکی HttpOnly و SameSite=Strict با عمر هشت ساعت رمز می‌شوند. در دسترسی عمومی کوکی Secure است. تغییر `SESSION_SECRET` نشست‌ها را نامعتبر می‌کند؛ این مقدار باید میان نمونه‌های یک استقرار یکسان باشد.
+Users sign in with their own Nextcloud username and app password. For a development-only account shortcut, see `NEXTCLOUD_USERNAME` and `NEXTCLOUD_PASSWORD` in the template. Internet-facing deployments require HTTPS and mandatory authentication.
 
-نشست واردشده از مشخصات حساب پیش‌فرض مدیر استفاده نمی‌کند. جلسه‌ها، صورت‌جلسه و درخواست‌ها در فضای همان حساب Nextcloud ذخیره می‌شوند. تغییر حساب در برگه‌ای دیگر تشخیص داده می‌شود تا درخواست برگهٔ قدیمی به حساب جدید اعمال نشود. تاریخچهٔ مرورگر هم با شناسهٔ حساب و سرور جداست؛ دادهٔ محلی رمزگذاری‌شده نیست و روی رایانهٔ مشترک از پروفایل مرورگر جدا استفاده کنید.
+The AI endpoint must accept `model`, `messages`, and `stream: false`, and return text in `choices[0].message.content`. Other native API formats require an adapter. Conversation text and meeting context are sent to the configured AI service.
 
-میان‌بُر بدون ورود فقط در حالت توسعه، روی hostname محلی و با `APP_AUTH_REQUIRED=false` فعال است. در دسترسی غیرمحلی ورود لازم است. محدودیت تلاش ورود داخل فرایند است؛ در استقرار چندنمونه‌ای محدودیت نرخ در درگاه ورودی هم لازم است. خروج کوکی مرورگر را پاک می‌کند؛ نسخهٔ کپی‌شدهٔ نشست تا انقضا یا تعویض کلید اعتبار دارد.
+For detailed account, availability, storage, and deployment behavior, see the [configuration guide](docs/configuration.md).
 
-## ذخیره و بازیابی
+### Docker
 
-- `Hamjalase-meetings.json` در Files حساب، فهرست مدیریت جلسه‌هاست. جلسه‌های قدیمی بیرون از این فهرست خودکار وارد نمی‌شوند.
-- `Hamjalase-request-<UUID>.json` نتیجهٔ درخواست ساخت را نگه می‌دارد. تکرار همان درخواست نتیجهٔ قبلی را برمی‌گرداند؛ رزرو هم‌زمان با `If-None-Match` کنترل می‌شود. این فایل‌ها را تا وقتی امکان تلاش مجدد هست حذف نکنید.
-- شناسهٔ درخواست و پیش‌نویس در مرورگر باقی می‌مانند. پس از قطع شبکه با همان پیش‌نویس دوباره تلاش کنید. اگر نتیجهٔ ساخت اتاق نامشخص باشد، درخواست رزروشده خودکار اتاق دیگری نمی‌سازد؛ ابتدا Talk و تقویم را بررسی کنید.
-- تغییرات با ETag و نسخهٔ مورد انتظار کنترل می‌شوند. خطای جزئی صریح نمایش داده می‌شود و همگام‌سازی ناقص عنوان و افراد Talk قابل تکرار است.
-- در تغییر زمان، تقویم افراد بررسی می‌شود. بازهٔ قدیمی سازمان‌دهنده فقط با تأیید UID و زمان رویداد ذخیره‌شده از بررسی دوباره کنار گذاشته می‌شود؛ بخش‌های تازه بررسی می‌شوند.
-- لغو، رویداد و اتاق Talk را همراه تاریخچه حذف می‌کند و تأیید صریح لازم است. صورت‌جلسه در فهرست لغوشده باقی می‌ماند.
-- رویداد در تقویم سازمان‌دهنده ثبت می‌شود. خروجی تقویم، گیرندهٔ زمان‌بندی ندارد.
-
-## Docker با Nextcloud موجود
+The included Compose file runs the assistant against an **existing** Nextcloud instance:
 
 ```sh
 docker compose up -d --build
 ```
 
-`compose.yaml` فقط دستیار را اجرا می‌کند. `.env.local` باید وجود داشته باشد. آدرس `NEXTCLOUD_URL` را برای دسترسی از داخل کانتینر تنظیم کنید؛ آدرس لینک مرورگر می‌تواند متفاوت باشد. Dockerfile سرور توسعه را اجرا می‌کند و پورت فقط روی loopback میزبان منتشر می‌شود؛ برای دسترسی اینترنتی درگاه HTTPS لازم است.
+Create `.env.local` first and ensure the Nextcloud URL is reachable from inside the container. The Dockerfile currently runs the development server and binds the published port to the host loopback interface. An internet-facing deployment needs an HTTPS gateway and the authentication settings above.
 
-## بررسی پروژه
+## Current scope
+
+- This project is under active development.
+- Availability checks depend on calendar permissions. Unknown availability is never treated as free.
+- Shared-time suggestions currently search seven days from the selected date, between 09:00 and 18:00 in **Asia/Tehran**.
+- The meeting list manages meetings created through Hamjalase; existing calendar events are not automatically imported.
+- Events are saved in the organizer's calendar. Sharing uses Talk links and `.ics` exports; email delivery is not included.
+- Talk rooms use public guest links. Removing a participant's room membership does not revoke access through a public link.
+
+## Development
 
 ```sh
 npm test
@@ -110,28 +125,26 @@ npm run typecheck
 npm run build
 ```
 
-تست واقعی روی Nextcloud محلی با میان‌بُر توسعهٔ فعال:
+The test suite covers session isolation, API key routing, calendar availability, idempotent creation, meeting updates, filtering, and calendar exports.
+
+With a configured Nextcloud test instance, run the integration smoke test:
 
 ```sh
 npm run smoke
 ```
 
-تست فقط جلسهٔ موقت خودش را می‌سازد، درخواستش را تکرار می‌کند، ویرایش و صورت‌جلسه و خروجی را بررسی می‌کند و همان جلسه را در پایان لغو می‌کند. با `SMOKE_TEST_MODEL=1` اتصال مدل هم تست می‌شود. برای نمونهٔ دارای ورود اجباری، `SMOKE_BASE_URL`، `SMOKE_SESSION_COOKIE` و `SMOKE_ACCOUNT` را فقط در محیط محلی تست تنظیم کنید؛ کوکی را در فرمان عمومی، issue یا log منتشر نکنید.
+It creates a temporary meeting, verifies replay, editing, notes, and calendar export, then cancels that meeting. See the [testing guide](docs/configuration.md#testing) for authenticated test settings.
 
-آزمون‌های واحد جداسازی دو هویت، رمزنگاری و انقضای نشست، درخواست هم‌زمان، بازپخش نتیجه، فیلترها، صورت‌جلسه، خروجی تقویم، FreeBusy و تغییر بازهٔ هم‌پوشان را پوشش می‌دهند. ورود حساب موجود و مسیر واقعی جلسه روی Nextcloud محلی آزمایش شده‌اند؛ تست دو حساب مستقل روی سرور واقعی در این محیط انجام نشده است.
+## Contributing
 
-## ساختار کد
+Bug reports and pull requests are welcome. Include reproduction steps, expected behavior, and the relevant Nextcloud version when [opening an issue](https://github.com/Shayan83/hamjalase/issues). Run the checks above before submitting code changes.
 
-- `app/components`: چت، ورود، تنظیمات، پیش‌نویس، فهرست، ویرایش و صورت‌جلسه
-- `app/hooks/use-conversations.ts`: گفت‌وگوهای تفکیک‌شده بر اساس حساب
-- `app/lib/agent-service.ts`: عملیات واقعی Nextcloud
-- `app/lib/auth.ts` و `connection.ts`: نشست و انتخاب حساب مجاز
-- `app/lib/idempotency.ts`: رزرو و بازیابی درخواست ساخت
-- `app/lib/availability.ts` و `rescheduling.ts`: تقویم و بررسی تغییر بازه
-- `app/demo`: معرفی رابط با دادهٔ نمونه، بدون اطلاعات واقعی
+## Secrets and privacy
 
-## انتشار در Git
+Only the placeholder `.env.example` is included in the repository. `.env.local`, private hosting configuration, and generated runtime files are excluded by `.gitignore`. Keep API keys, passwords, session cookies, and private meeting data out of commits, issues, and screenshots.
 
-کد و `.env.example` قابل انتشارند. `.env.local`، رمزها، خروجی build، فایل‌های وضعیت ابزار و شناسهٔ شخصی میزبانی نادیده گرفته می‌شوند. مخزن عمومی پروژه: [Shayan83/hamjalase](https://github.com/Shayan83/hamjalase).
+AI provider keys configured on the server remain server-side and are not forwarded when a user switches to a different API endpoint. Meeting metadata is stored in the signed-in user's Nextcloud Files; conversation history is stored in the browser, scoped to the account.
 
-فونت Vazirmatn از صابر راستی‌کردار با مجوز SIL OFL در `public/fonts/OFL.txt` قرار دارد. مجوز بخش‌های همراه در فایل‌های LICENSE مربوط به خودشان نگهداری شده‌اند.
+## Acknowledgments
+
+Built with React, Next.js-compatible tooling, Nextcloud Calendar, and Nextcloud Talk. Uses [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar under the [SIL Open Font License](public/fonts/OFL.txt).

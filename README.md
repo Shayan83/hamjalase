@@ -28,6 +28,8 @@
 نیازمندی‌ها: Node.js نسخهٔ 24 یا بالاتر، npm و یک Nextcloud با Calendar و Talk فعال و تقویمی با شناسهٔ `personal`.
 
 ```sh
+git clone https://github.com/Shayan83/hamjalase.git
+cd hamjalase
 npm ci
 cp .env.example .env.local
 ```
@@ -130,6 +132,6 @@ npm run smoke
 
 ## انتشار در Git
 
-کد و `.env.example` قابل انتشارند. `.env.local`، رمزها، خروجی build، فایل‌های وضعیت ابزار و شناسهٔ شخصی میزبانی نادیده گرفته می‌شوند. مخزن به مقصد مشخصی متصل نشده است.
+کد و `.env.example` قابل انتشارند. `.env.local`، رمزها، خروجی build، فایل‌های وضعیت ابزار و شناسهٔ شخصی میزبانی نادیده گرفته می‌شوند. مخزن عمومی پروژه: [Shayan83/hamjalase](https://github.com/Shayan83/hamjalase).
 
 فونت Vazirmatn از صابر راستی‌کردار با مجوز SIL OFL در `public/fonts/OFL.txt` قرار دارد. مجوز بخش‌های همراه در فایل‌های LICENSE مربوط به خودشان نگهداری شده‌اند.

@@ -1,0 +1,16 @@
+name: hamjalase
+services:
+  agent:
+    build: .
+    init: true
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5173:5173"
+    env_file:
+      - .env.local
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:5173/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 10s
+      start_period: 60s
+      retries: 10
